@@ -28,7 +28,6 @@ function Login() {
       );
 
       const { token } = response.data;
-      document.cookie = `token=${token}; path=/`; // Set the JWT token in a cookie
       setredirect(true); // Assuming setLogin sets the logged-in state in the parent component
       setUser(response.data);
     } catch (err) {
