@@ -11,16 +11,10 @@ export default function CreateProblemForm() {
   const { user } = useContext(UserContext);
   const [qCreated, setqCreated] = useState(false)
 
-  const getCookie = (name) => {
-    const match = document.cookie.match(
-      new RegExp("(^| )" + name + "=([^;]+)")
-    );
-    return match ? match[2] : null;
-  };
 
   if (!user) return <Navigate to={"/login"} />;
   if (qCreated) return <Navigate to={"/questions"} />;
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
     // Collect data from form state
@@ -31,24 +25,28 @@ export default function CreateProblemForm() {
       tags: tags.split(",").map((tag) => tag.trim()), // Convert tags to an array of trimmed strings
     };
   
-    // Retrieve the token from cookies
-    const token = getCookie('token');// Ensure token is logged correctly
+    try {
+      // Retrieve the token from session storage
+      const token = sessionStorage.getItem('token');
+      
   
-    // Send the data to your backend
-    axios
-      .post("/questions", formData, {
+      // Send the data to your backend with the Authorization header
+      const response = await axios.post("/questions", formData, {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach token in Authorization header
-        },
-      })
-      .then((response) => {
-        setqCreated(true)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+          'Authorization': `Bearer ${token}` // Include the token in the header
+        }
       });
+  
+      // Handle successful response
+      setqCreated(true); // Assuming setqCreated handles state update for successful question creation
+    } catch (error) {
+      // Handle error
+      console.error("Error:", error);
+      setError("Failed to create question. Please try again."); // Optionally set an error message
+    }
   };
+  
+  
 
   return (
     <div className="flex justify-center py-2 ">

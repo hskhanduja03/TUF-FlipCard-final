@@ -11,6 +11,7 @@ import Navbar from "./Components/Navbar";
 import Layout from "./Layout";
 import CreateProblemForm from "./Pages/CreateProblemForm";
 import axios from "axios";
+import Dashboard from "./Components/Dashboard";
 
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL||"http://localhost:4000/api";
@@ -26,7 +27,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/test" element={<Test />} />
           <Route path="/nav" element={<Navbar />} />
-          {/* <Route path="/dashboard" element={<Dashboard/>}/> */}
+          <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/questions" element={<Carousel />} />
         </Route>
       </Routes>

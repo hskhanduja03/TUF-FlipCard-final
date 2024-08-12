@@ -3,12 +3,19 @@ import gsap from "gsap";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 
-const Card = ({ frontContent, backContent, shouldFlip }) => {
+const Card = ({
+  frontContent,
+  backContent,
+  shouldFlip,
+  createdBy,
+  difficulty,
+}) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const topEle = useRef();
   const mainContent = useRef();
   const cardRef = useRef();
   const { user } = useContext(UserContext);
+
   const splitContent = (content) => {
     const text =
       typeof content === "string" ? content : content.props.children || "";
@@ -95,13 +102,21 @@ const Card = ({ frontContent, backContent, shouldFlip }) => {
     >
       <div className="flip-card-inner" ref={cardRef}>
         <div className="flip-card-front bg-white flex flex-col rounded-xl h-full relative">
-          <div className="font-bold text-3xl absolute top-3">Question</div>
+          <div className="font-bold text-3xl absolute top-3 flex flex-col items-center gap-4">
+            <span className="w-full text-center">Question</span>
+            <div className="text-sm font-bold flex justify-between gap-10 p-2 bg-gray-300 rounded-md">
+              <div className="text-gray-800">Contributed By: <span className=" text-blue-500">{createdBy}</span></div>
+              <div className={`flex gap-2 `}>
+                Difficulty: <span className={`${difficulty === 'Easy' ? 'text-green-500' : difficulty === 'Medium' ? 'text-yellow-500' : 'text-red-500'}`}>{difficulty}</span>
+              </div>
+            </div>
+          </div>
           <div ref={mainContent} className="p-3">
             {shouldTruncate(frontContent)
               ? splitContent(frontContent)
               : frontContent}
           </div>
-          <div className="absolute bottom-0  w-full text-center text-gray-500 p-2">
+          <div className="absolute bottom-0 w-full text-center text-gray-500 p-2">
             <span>Tap or "Enter" to see Answer</span>
           </div>
         </div>

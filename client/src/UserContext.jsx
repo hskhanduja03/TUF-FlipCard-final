@@ -15,7 +15,8 @@ export function UserContextProvider({ children }) {
         });
         setUser(response.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data:", error.message);
+        console.error("Error details:", error.response ? error.response.data : error.message);
       } finally {
         setReady(true);
       }

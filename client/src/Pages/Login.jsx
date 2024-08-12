@@ -19,23 +19,29 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     setError("");
-
+  
     try {
       const response = await axios.post(
-        "/login", // This should be relative to the `baseURL` you set
-        { email, password },
-        { withCredentials: true } // Allows cookies to be sent with the request
+        "/login", // Ensure the base URL is set correctly
+        { email, password }
+        // Remove `{ withCredentials: true }` since we're not using cookies
       );
-
-      const { token } = response.data;
-      setredirect(true); // Assuming setLogin sets the logged-in state in the parent component
+  
+      // Save the token in session storage
+      console.log(response.data);
+      
+      sessionStorage.setItem('token', response.data.token);
+  
+      // Set user data and redirect
       setUser(response.data);
+      setRedirect(true); // Assuming setRedirect handles redirection in your component
     } catch (err) {
       setError("Login failed. Please check your credentials and try again.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
