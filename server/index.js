@@ -5,7 +5,7 @@ const app = express();
 const mongoose = require("mongoose");
 const User = require("./models/User.model");
 const Question = require("./models/Question.model");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
