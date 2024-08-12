@@ -22,7 +22,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "/login", // Update with your backend URL
+        "/login", // This should be relative to the `baseURL` you set
         { email, password },
         { withCredentials: true } // Allows cookies to be sent with the request
       );

@@ -12,13 +12,16 @@ const cookieParser = require("cookie-parser");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = process.env.JWT_SECRET || "default_secret"; // Use environment variable for JWT secret
 
-app.use(
-  cors({
-    credentials: true,
-    // origin: process.env.NODE_ENV === 'production' ? 'https://tuf-flip-card.vercel.app' : 'http://127.0.0.1:5173',
-    origin: ["*", "https://tuf-flipcard-final-1.onrender.com"],
-  })
-);
+
+const corsOptions = {
+  origin: ["http://127.0.0.1:5173", "https://tuf-flipcard-final-frontend.onrender.com"], // List all allowed origins
+  credentials: true, // Allow cookies to be sent
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow specific methods
+  allowedHeaders: "Content-Type,Authorization" // Allow specific headers
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
