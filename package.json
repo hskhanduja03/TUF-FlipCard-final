@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-      "frontend":"cd client && npm i",
-      "backend":"cd server && npm i",
+      "frontend":"cd client && npm run dev",
+      "backend":"cd server && npm run start",
       "start":"npm run frontend && npm run backend"
 
     }
